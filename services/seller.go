@@ -18,16 +18,10 @@ type SellerSvc interface {
 	RegisterSeller(ctx context.Context, sellerParam dto.UserCreate) (entity.User, error)
 	VerifySeller(ctx context.Context, email string, password string) (bool, error)
 	FindSellerByEmail(ctx context.Context, email string) (entity.User, error)
-<<<<<<< HEAD
 	FindSellerByID(ctx context.Context, id uint64) (cust entity.User, err error)
 	FindSellerByName(ctx context.Context, firstname string, lastname string) (entity.User, error)
 	FindSeller(ctx context.Context) ([]entity.User, error)
 	UpdateSeller(ctx context.Context, sellerParam dto.UserUpdate, sellerId uint64) (seller entity.User, err error)
-=======
-	FindSellerByID(ctx context.Context, id uint64) (entity.User, error)
-	GetAllSeller(ctx context.Context) (entity.User, error)
-	UpdateSeller(ctx context.Context, sellerParam dto.UserUpdate, id uint64) (entity.User, error)
->>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 	DeleteSeller(ctx context.Context, id uint64) (entity.User, error)
 }
 
@@ -74,7 +68,6 @@ func (svc *sellerSvc) FindSellerByEmail(ctx context.Context, email string) (enti
 	return seller, nil
 }
 
-<<<<<<< HEAD
 func (svc *sellerSvc) FindSellerByID(ctx context.Context, id uint64) (cust entity.User, err error) {
 	check, err := svc.sellerRepo.CheckIDSeller(ctx, cust, id)
 	if err != nil {
@@ -85,17 +78,12 @@ func (svc *sellerSvc) FindSellerByID(ctx context.Context, id uint64) (cust entit
 
 func (svc *sellerSvc) FindSellerByName(ctx context.Context, firstname string, lastname string) (entity.User, error) {
 	seller, err := svc.sellerRepo.CheckSellerName(ctx, firstname, lastname)
-=======
-func (svc *sellerSvc) FindSellerByID(ctx context.Context, id uint64) (entity.User, error) {
-	seller, err := svc.sellerRepo.CheckIDSeller(ctx, id)
->>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 	if err != nil {
 		return entity.User{}, err
 	}
 	return seller, nil
 }
 
-<<<<<<< HEAD
 func (svc *sellerSvc) FindSeller(ctx context.Context) ([]entity.User, error) {
 	check, err := svc.sellerRepo.GetAllSeller(ctx)
 	if err != nil {
@@ -123,32 +111,4 @@ func (svc *sellerSvc) DeleteSeller(ctx context.Context, id uint64) (entity.User,
 		return entity.User{}, err
 	}
 	return check, nil
-=======
-func (svc *sellerSvc) GetAllSeller(ctx context.Context) (entity.User, error) {
-	seller, err := svc.sellerRepo.GetAllSeller(ctx)
-	if err != nil {
-		return entity.User{}, err
-	}
-	return seller, nil
-}
-
-func (svc *sellerSvc) UpdateSeller(ctx context.Context, sellerParam dto.UserUpdate, id uint64) (entity.User, error) {
-	var seller entity.User
-	copier.Copy(&seller, &sellerParam)
-
-	sellerParam.ID = id
-	updatedCust, err := svc.sellerRepo.UpdateSeller(ctx, seller, id)
-	if err != nil {
-		return entity.User{}, err
-	}
-	return updatedCust, nil
-}
-
-func (svc *sellerSvc) DeleteSeller(ctx context.Context, id uint64) (entity.User, error) {
-	seller, err := svc.sellerRepo.DeleteSeller(ctx, id)
-	if err != nil {
-		return entity.User{}, err
-	}
-	return seller, nil
->>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 }

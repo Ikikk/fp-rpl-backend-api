@@ -16,10 +16,7 @@ type userController struct {
 
 type UserController interface {
 	Register(ctx *gin.Context)
-<<<<<<< HEAD
 	GetSellerByName(ctx *gin.Context)
-=======
->>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 }
 
 func NewUserController(cs services.CustSvc, ss services.SellerSvc) UserController {
@@ -62,7 +59,6 @@ func (c *userController) Register(ctx *gin.Context) {
 	}
 }
 
-<<<<<<< HEAD
 func (c *userController) GetSellerByName(ctx *gin.Context) {
 	var sellerParam dto.UserUpdate
 	errParam := ctx.ShouldBindJSON(&sellerParam)
@@ -83,8 +79,6 @@ func (c *userController) GetSellerByName(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, response)
 }
 
-=======
->>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 // func (c *userController) Logout(ctx *gin.Context) {
 // 	tokenString, err := ctx.
 // }
