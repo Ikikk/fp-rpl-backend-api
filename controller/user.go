@@ -16,6 +16,10 @@ type userController struct {
 
 type UserController interface {
 	Register(ctx *gin.Context)
+<<<<<<< HEAD
+	GetSellerByName(ctx *gin.Context)
+=======
+>>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 }
 
 func NewUserController(cs services.CustSvc, ss services.SellerSvc) UserController {
@@ -58,6 +62,29 @@ func (c *userController) Register(ctx *gin.Context) {
 	}
 }
 
+<<<<<<< HEAD
+func (c *userController) GetSellerByName(ctx *gin.Context) {
+	var sellerParam dto.UserUpdate
+	errParam := ctx.ShouldBindJSON(&sellerParam)
+	if errParam != nil {
+		response := utils.BuildErrorResponse("Failed to process get request", http.StatusBadRequest, utils.EmptyObj{})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
+		return
+	}
+
+	seller, err := c.sellerSvc.FindSellerByName(ctx.Request.Context(), sellerParam.FirstName, sellerParam.LastName)
+	if err != nil {
+		response := utils.BuildErrorResponse("Gagal dapatkan seller", http.StatusBadRequest, utils.EmptyObj{})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := utils.BuildResponse("Berhasil dapatkan seller", http.StatusOK, seller)
+	ctx.JSON(http.StatusCreated, response)
+}
+
+=======
+>>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 // func (c *userController) Logout(ctx *gin.Context) {
 // 	tokenString, err := ctx.
 // }

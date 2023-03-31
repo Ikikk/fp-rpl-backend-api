@@ -20,8 +20,13 @@ type CustSvc interface {
 	VerifyCust(ctx context.Context, email string, password string) (bool, error)
 	FindCustByEmail(ctx context.Context, email string) (entity.User, error)
 	FindCustByID(ctx context.Context, id uint64) (entity.User, error)
+<<<<<<< HEAD
+	FindCust(ctx context.Context) ([]entity.User, error)
+	UpdateCust(ctx context.Context, custParam dto.UserUpdate, custId uint64) (cust entity.User, err error)
+=======
 	GetAllCust(ctx context.Context) (entity.User, error)
 	UpdateCust(ctx context.Context, custParam dto.UserUpdate, id uint64) (entity.User, error)
+>>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 	DeleteCust(ctx context.Context, id uint64) (entity.User, error)
 }
 
@@ -70,6 +75,33 @@ func (svc *custSvc) FindCustByEmail(ctx context.Context, email string) (entity.U
 	return cust, nil
 }
 
+<<<<<<< HEAD
+func (svc *custSvc) FindCustByID(ctx context.Context, id uint64) (cust entity.User, err error) {
+	check, err := svc.custRepo.CheckIDCust(ctx, cust, id)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return check, nil
+}
+
+func (svc *custSvc) FindCust(ctx context.Context) ([]entity.User, error) {
+	check, err := svc.custRepo.GetAllCust(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return check, nil
+}
+
+func (svc *custSvc) UpdateCust(ctx context.Context, custParam dto.UserUpdate, custId uint64) (cust entity.User, err error) {
+	custParam.ID = custId
+	copier.Copy(&cust, &custParam)
+
+	updatedCust, err := svc.custRepo.UpdateCust(ctx, cust, custId)
+	if err != nil {
+		return cust, err
+	}
+
+=======
 func (svc *custSvc) FindCustByID(ctx context.Context, id uint64) (entity.User, error) {
 	cust, err := svc.custRepo.CheckIDCust(ctx, id)
 	if err != nil {
@@ -95,13 +127,22 @@ func (svc *custSvc) UpdateCust(ctx context.Context, custParam dto.UserUpdate, id
 	if err != nil {
 		return entity.User{}, err
 	}
+>>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 	return updatedCust, nil
 }
 
 func (svc *custSvc) DeleteCust(ctx context.Context, id uint64) (entity.User, error) {
+<<<<<<< HEAD
+	check, err := svc.custRepo.DeleteCust(ctx, id)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return check, nil
+=======
 	cust, err := svc.custRepo.DeleteCust(ctx, id)
 	if err != nil {
 		return entity.User{}, err
 	}
 	return cust, nil
+>>>>>>> 586dd1e751800d4c7b236d04bef85b9484fb3fd0
 }
