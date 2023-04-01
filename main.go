@@ -36,12 +36,16 @@ func main() {
 
 	userController := controller.NewUserController(custService, sellerService)
 
-	// defer config.CloseDatabaseConnection(db)
+	productRepository := repository.NewProductRepo(db, sellerRepository)
+	productService := services.NewProductSvc(productRepository)
+	productController := controller.NewProductController(productService)
+
+	defer config.CloseDatabaseConnection(db)
 
 	server := gin.Default()
 	server.Use(middleware.CORS())
 
-	routes.Routes(server, userController, custController, sellerController, jwtService)
+	routes.Routes(server, userController, custController, sellerController, productController, jwtService)
 
 	port := os.Getenv("PORT")
 	if port == " " {

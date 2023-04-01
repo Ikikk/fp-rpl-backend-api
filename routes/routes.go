@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Routes(route *gin.Engine, UserController controller.UserController, CustContoller controller.CustController, SellerContoller controller.SellerController, jwtSvc services.JWTService) {
+func Routes(route *gin.Engine, UserController controller.UserController, CustContoller controller.CustController, SellerContoller controller.SellerController, ProductController controller.ProductController, jwtSvc services.JWTService) {
 	router := route.Group("")
 	{
 		router.POST("/register", UserController.Register)
 		router.POST("/search", UserController.GetSellerByName)
-		// router.GET("", middleware.Authenticate(""))
+		router.GET("", ProductController.GetAllProduct)
 
 	}
 
@@ -40,5 +40,11 @@ func Routes(route *gin.Engine, UserController controller.UserController, CustCon
 
 		// adminRouter.GET("/seller/:id", SellerContoller.GetSellerByID)
 		adminRouter.GET("/seller/all", SellerContoller.GetAllSeller)
+	}
+
+	productRouter := route.Group("/product")
+	{
+		productRouter.POST("/create", ProductController.CreateProduct)
+
 	}
 }

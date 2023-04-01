@@ -1,4 +1,4 @@
-package entity
+package dto
 
 type Like struct {
 	ID         uint64 `gorm:"primary_key" json:"id"`

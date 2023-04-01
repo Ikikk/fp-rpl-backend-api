@@ -40,6 +40,7 @@ func (repo *custRepo) RegisterCust(ctx context.Context, cust entity.User) (entit
 func (repo *custRepo) CheckEmailCust(ctx context.Context, email string) (cust entity.User, err error) {
 	tx := repo.db.Where("email = ?", email).Take(&cust)
 	if tx.Error != nil {
+		log.Println(err)
 		return entity.User{}, err
 	}
 	return cust, nil
@@ -49,6 +50,7 @@ func (repo *custRepo) CheckIDCust(ctx context.Context, cust entity.User, id uint
 	var err error
 	tx := repo.db.Where("id = ?", id).Take(&cust)
 	if tx.Error != nil {
+		log.Println(err)
 		return entity.User{}, err
 	}
 	return cust, nil
@@ -57,6 +59,7 @@ func (repo *custRepo) CheckIDCust(ctx context.Context, cust entity.User, id uint
 func (repo *custRepo) GetAllCust(ctx context.Context) (cust []entity.User, err error) {
 	tx := repo.db.Where("role = 'customer'").Find(&cust)
 	if tx.Error != nil {
+		log.Println(err)
 		return nil, err
 	}
 	return cust, nil
@@ -66,6 +69,7 @@ func (repo *custRepo) UpdateCust(ctx context.Context, cust entity.User, custId u
 	var err error
 	tx := repo.db.Updates(&cust).Save(&cust)
 	if tx.Error != nil {
+		log.Println(err)
 		return entity.User{}, err
 	}
 	return cust, nil
@@ -74,6 +78,7 @@ func (repo *custRepo) UpdateCust(ctx context.Context, cust entity.User, custId u
 func (repo *custRepo) DeleteCust(ctx context.Context, custId uint64) (cust entity.User, err error) {
 	tx := repo.db.Delete(&cust, custId)
 	if tx.Error != nil {
+		log.Println(err)
 		return entity.User{}, err
 	}
 	return cust, nil
