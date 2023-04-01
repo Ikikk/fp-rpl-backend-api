@@ -18,6 +18,11 @@ type SellerSvc interface {
 	RegisterSeller(ctx context.Context, sellerParam dto.UserCreate) (entity.User, error)
 	VerifySeller(ctx context.Context, email string, password string) (bool, error)
 	FindSellerByEmail(ctx context.Context, email string) (entity.User, error)
+	FindSellerByID(ctx context.Context, id uint64) (cust entity.User, err error)
+	FindSellerByName(ctx context.Context, firstname string, lastname string) (entity.User, error)
+	FindSeller(ctx context.Context) ([]entity.User, error)
+	UpdateSeller(ctx context.Context, sellerParam dto.UserUpdate, sellerId uint64) (seller entity.User, err error)
+	DeleteSeller(ctx context.Context, id uint64) (entity.User, error)
 }
 
 func NewSellerSvc(repo repository.SellerRepo) SellerSvc {
@@ -61,4 +66,49 @@ func (svc *sellerSvc) FindSellerByEmail(ctx context.Context, email string) (enti
 		return entity.User{}, err
 	}
 	return seller, nil
+}
+
+func (svc *sellerSvc) FindSellerByID(ctx context.Context, id uint64) (cust entity.User, err error) {
+	check, err := svc.sellerRepo.CheckIDSeller(ctx, cust, id)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return check, nil
+}
+
+func (svc *sellerSvc) FindSellerByName(ctx context.Context, firstname string, lastname string) (entity.User, error) {
+	seller, err := svc.sellerRepo.CheckSellerName(ctx, firstname, lastname)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return seller, nil
+}
+
+func (svc *sellerSvc) FindSeller(ctx context.Context) ([]entity.User, error) {
+	check, err := svc.sellerRepo.GetAllSeller(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return check, nil
+}
+
+func (svc *sellerSvc) UpdateSeller(ctx context.Context, sellerParam dto.UserUpdate, sellerId uint64) (seller entity.User, err error) {
+	sellerParam.ID = sellerId
+	copier.Copy(&seller, &sellerParam)
+
+	updated, err := svc.sellerRepo.UpdateSeller(ctx, seller, sellerId)
+	if err != nil {
+		return seller, err
+	}
+
+	return updated, nil
+
+}
+
+func (svc *sellerSvc) DeleteSeller(ctx context.Context, id uint64) (entity.User, error) {
+	check, err := svc.sellerRepo.DeleteSeller(ctx, id)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return check, nil
 }

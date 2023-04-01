@@ -81,6 +81,7 @@ func (j *jwtService) GetUserIDByToken(token string) (uint64, error) {
 	claims := t_Token.Claims.(jwt.MapClaims)
 	id := fmt.Sprintf("%v", claims["user_id"])
 	teamID, _ := strconv.ParseUint(id, 10, 64)
+	fmt.Println(id)
 	return teamID, nil
 }
 
