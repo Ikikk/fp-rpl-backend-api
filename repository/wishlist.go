@@ -48,7 +48,7 @@ func (repo *wishlistRepo) AddWishlist(ctx context.Context, userID uint64, produc
 		return entity.Wishlist{}, err
 	}
 
-	result := repo.db.Where("product_id = ?", productID).Find(&product)
+	result := repo.db.Where("id = ?", productID).Find(&product)
 	if result.Error != nil {
 		log.Println(err)
 		return entity.Wishlist{}, err

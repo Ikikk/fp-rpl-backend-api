@@ -17,8 +17,8 @@ type User struct {
 	Address   string `gorm:"type:varchar(255)" json:"address" binding:"required"`
 	Password  string `gorm:"type:varchar(255)" json:"password" binding:"required"`
 
-	Wishlist []Wishlist `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"wishlists,omitempty"`
-	Review   []Review   `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"reviews,omitempty"`
+	// Wishlist []Wishlist `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"wishlists,omitempty"`
+	// Review   []Review   `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"reviews,omitempty"`
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
