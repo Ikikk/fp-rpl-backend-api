@@ -38,14 +38,22 @@ func main() {
 
 	productRepository := repository.NewProductRepo(db, sellerRepository)
 	productService := services.NewProductSvc(productRepository)
-	productController := controller.NewProductController(productService)
+	productController := controller.NewProductController(productService, jwtService)
+
+	wishlistRepository := repository.NewWishlistRepo(db, productRepository)
+	wishlistService := services.NewWishlistSvc(wishlistRepository)
+	wishlistController := controller.NewWishlistController(wishlistService, jwtService)
+
+	reviewRepository := repository.NewReviewRepo(db)
+	reviewService := services.NewReviewSvc(reviewRepository)
+	reviewController := controller.NewReviewController(reviewService)
 
 	defer config.CloseDatabaseConnection(db)
 
 	server := gin.Default()
 	server.Use(middleware.CORS())
 
-	routes.Routes(server, userController, custController, sellerController, productController, jwtService)
+	routes.Routes(server, userController, custController, sellerController, productController, wishlistController, reviewController, jwtService)
 
 	port := os.Getenv("PORT")
 	if port == " " {

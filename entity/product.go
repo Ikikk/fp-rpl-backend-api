@@ -10,8 +10,9 @@ type Product struct {
 	Category   Category `gorm:"foreignKey:CategoryID" json:"category"`
 	CategoryID uint64   `json:"category_id" binding:"required"`
 
-	Like   []Like   `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"likes"`
-	Review []Review `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"review"`
+	Wishlist []Wishlist `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"likes"`
+	Wish     uint64     `json:"wish_count"`
+	Review   []Review   `gorm:"foreignKey:ProductID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"review"`
 
 	User   User   `gorm:"foreignKey:UserID" json:"user"`
 	UserID uint64 `json:"user_id" binding:"required"`
